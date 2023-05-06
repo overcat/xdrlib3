@@ -8,8 +8,7 @@ you can find the LICENSE file here: https://github.com/python/cpython/blob/024ac
 import struct
 from functools import wraps
 from io import BytesIO
-from typing import Callable, List, Union, TypeVar
-
+from typing import Callable, List, Union, TypeVar, Sequence
 
 __all__ = ["Error", "Packer", "Unpacker", "ConversionError"]
 
@@ -124,21 +123,21 @@ class Packer:
     pack_opaque = pack_string
     pack_bytes = pack_string
 
-    def pack_list(self, list: List[T], pack_item: Callable[[T], None]) -> None:
+    def pack_list(self, list: Sequence[T], pack_item: Callable[[T], None]) -> None:
         for item in list:
             self.pack_uint(1)
             pack_item(item)
         self.pack_uint(0)
 
     def pack_farray(
-        self, n: int, list: List[T], pack_item: Callable[[T], None]
+        self, n: int, list: Sequence[T], pack_item: Callable[[T], None]
     ) -> None:
         if len(list) != n:
             raise ValueError("wrong array size")
         for item in list:
             pack_item(item)
 
-    def pack_array(self, list: List[T], pack_item: Callable[[T], None]) -> None:
+    def pack_array(self, list: Sequence[T], pack_item: Callable[[T], None]) -> None:
         n = len(list)
         self.pack_uint(n)
         self.pack_farray(n, list, pack_item)
