@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "xdrlib3"
-version = "0.1.0.dev1"
+version = "0.1.0"
 description = "A forked version of `xdrlib`, a module for encoding and decoding XDR (External Data Representation) data in Python."
 authors = ["overcat <4catcode@gmail.com>"]
 readme = "README.md"
